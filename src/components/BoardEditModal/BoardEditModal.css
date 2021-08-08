@@ -1,0 +1,6 @@
+.board-edit > * {
+  margin-top: 24px;
+}
+.board-edit > *:first-child {
+  margin: 0;
+}

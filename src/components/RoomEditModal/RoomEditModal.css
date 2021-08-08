@@ -1,0 +1,6 @@
+.room-edit > * {
+  margin-top: 24px;
+}
+.room-edit > *:first-child {
+  margin: 0;
+}

@@ -1,0 +1,57 @@
+.stage {
+  flex: 1;
+  background: rgba(251, 251, 255, 0.25);
+  box-shadow: 9px 18px 35px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  padding: 15px;
+  min-height: 280px;
+}
+
+.stage.dragged-over {
+  background: rgba(251, 251, 255, 0.5);
+}
+
+.stage__title {
+  color: white;
+}
+
+.stage__tasks {
+  margin-top: 18px;
+}
+
+.stage__tasks > * {
+  margin-bottom: 18px;
+}
+
+.task {
+  background-color: #fbfbff;
+  padding: 16px;
+  width: 100%;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 9px 18px 35px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  overflow: hidden;
+}
+
+.task__header {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.task__footer {
+  margin-top: 16px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: 0px -25px 20px 11px #fbfbfb;
+}
+
+.task__description {
+  margin-top: 16px;
+  font-size: 18px;
+  height: 120px;
+  overflow: hidden;
+}

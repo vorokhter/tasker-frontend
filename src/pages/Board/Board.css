@@ -1,0 +1,26 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.board__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+.board__title {
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.board__tasks {
+  display: flex;
+}
+
+.board__tasks > * {
+  margin: 0 12px;
+}

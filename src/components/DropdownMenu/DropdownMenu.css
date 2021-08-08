@@ -1,0 +1,30 @@
+.burger-menu__wrapper {
+  position: relative;
+}
+
+.burger-menu__wrapper > svg {
+  color: #fbfbfb;
+}
+
+.burger-menu__content {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  box-shadow: 0px 2px 9px rgb(0 0 0 / 50%);
+  border-radius: 2px;
+}
+
+.burger-line {
+  background: #fbfbfb;
+  border-bottom: 1px solid #c2c2c2;
+  display: flex;
+  align-items: center;
+  padding: 12px 32px;
+  cursor: pointer;
+}
+.burger-line:last-child {
+  border: none;
+}
+.burger-line:hover {
+  background: #e2e2e2;
+}

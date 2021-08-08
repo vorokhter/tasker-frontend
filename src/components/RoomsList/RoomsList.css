@@ -1,0 +1,29 @@
+.rooms-list {
+  background: #fbfbff;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  box-shadow: 9px 18px 35px rgba(0, 0, 0, 0.25);
+}
+.rooms-list__item {
+  height: 48px;
+  border-bottom: 1px solid #c2c2c2;
+  display: flex;
+  align-items: center;
+  min-width: 300px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+.rooms-list__item:last-child {
+  border: none;
+}
+.rooms-list__item:hover {
+  background: #3d75cf0e;
+}
+.rooms-list__item > svg {
+  margin-right: 6px;
+}
+.rooms-list__item.active {
+  background: #3d75cf0e;
+}

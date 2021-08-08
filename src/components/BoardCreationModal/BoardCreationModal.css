@@ -1,0 +1,6 @@
+.board-creation > * {
+  margin-top: 24px;
+}
+.board-creation > *:first-child {
+  margin: 0;
+}
