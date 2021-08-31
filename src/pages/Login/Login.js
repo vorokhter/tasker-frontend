@@ -1,8 +1,17 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { userApi } from "../../api";
-import men from "../../img/men.png";
-import "./Login.css";
+import {
+  Form,
+  Button,
+  FloatingLabel,
+  Card,
+  Container,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
+import banner from "../../img/banner.png";
 
 export function Login() {
   const history = useHistory();
@@ -26,42 +35,52 @@ export function Login() {
   };
 
   return (
-    <div className="page">
-      <form className="login-form" onSubmit={submit}>
-        <h1>Авторизация</h1>
+    <Container>
+      <Row className="justify-content-between">
+        <Col md="4" className="d-flex align-items-center">
+          <Card body className="bg-light w-100">
+            <Form onSubmit={submit}>
+              <Form.Label className="fs-5">Авторизация</Form.Label>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Почта"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Почта"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </FloatingLabel>
 
-        {isError && (
-          <span className="typography typography-error">{errorMessage}</span>
-        )}
-
-        <div className="inputs">
-          <input
-            type="email"
-            name="email"
-            placeholder="Почта"
-            className="input"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Пароль"
-            className="input"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <div className="controls">
-          <button type="submit" className="btn btn-primary">
-            Войти
-          </button>
-          <Link className="btn btn-empty btn-secondary" to={`./registration`}>
-            Регистрация
-          </Link>
-        </div>
-      </form>
-      <img className="men" src={men} alt="men4ik" />
-    </div>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Пароль"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Пароль"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </FloatingLabel>
+              <Button variant="primary" type="submit">
+                Войти
+              </Button>
+              <Link to={`/registration`}>
+                <Button variant="link">Регистрация</Button>
+              </Link>
+            </Form>
+          </Card>
+        </Col>
+        <Col md="6" className="d-flex align-items-center">
+          <Image src={banner} fluid alt="people" />
+        </Col>
+      </Row>
+    </Container>
   );
 }

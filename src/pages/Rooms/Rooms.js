@@ -8,7 +8,7 @@ import {
   RoomsList,
   Room,
 } from "../../components";
-import "./Rooms.css";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
 
 export function Rooms({ currentUser }) {
   const [users, setUsers] = React.useState([]);
@@ -28,10 +28,15 @@ export function Rooms({ currentUser }) {
   const fetchRooms = async () => {
     setIsLoading(true);
     const response = await roomApi.getRooms();
+
+    let result = [];
     if (response.success) {
-      setRooms(response.data);
+      result = response.data;
     }
+
+    setRooms(result);
     setIsLoading(false);
+    return result;
   };
 
   const fetchRoom = async (roomId) => {
@@ -53,8 +58,15 @@ export function Rooms({ currentUser }) {
     }
   };
 
+  const init = async () => {
+    const [roomsResponse] = await Promise.all([fetchRooms(), fetchUsers()]);
+    if (roomsResponse.length > 0) {
+      await fetchRoom(roomsResponse[0].id);
+    }
+  };
+
   React.useEffect(() => {
-    Promise.all([fetchRooms(), fetchUsers()]);
+    init();
   }, []);
 
   const onRoomDelete = async () => {
@@ -74,38 +86,43 @@ export function Rooms({ currentUser }) {
 
   return (
     <>
-      <div className="page">
-        <RoomsList
-          rooms={rooms}
-          selectedRoomId={room ? room.id : "-1"}
-          onRoomClick={fetchRoom}
-          onCreateNew={() => {
-            setRoomCreationModalOpen(true);
-          }}
-        />
-
-        {isLoading ? (
-          <div className="fill_space">загрузка...</div>
-        ) : (
-          room && (
-            <Room
-              canEdit={canEdit}
-              room={room}
-              onUsersManage={() => {
-                setUsersManageModalOpen(true);
+      <Container>
+        <Row>
+          <Col md="3">
+            <RoomsList
+              rooms={rooms}
+              selectedRoomId={room ? room.id : "-1"}
+              onRoomClick={fetchRoom}
+              onCreateNew={() => {
+                setRoomCreationModalOpen(true);
               }}
-              onAddBoard={() => {
-                setBoardCreationModalOpen(true);
-              }}
-              onEdit={() => {
-                setRoomEditModalOpen(true);
-              }}
-              onDelete={onRoomDelete}
-              onBoardDelete={onBoardDelete}
             />
-          )
-        )}
-      </div>
+          </Col>
+          <Col md="9">
+            {isLoading ? (
+              <Spinner animation="border" variant="light" />
+            ) : (
+              room && (
+                <Room
+                  canEdit={canEdit}
+                  room={room}
+                  onUsersManage={() => {
+                    setUsersManageModalOpen(true);
+                  }}
+                  onAddBoard={() => {
+                    setBoardCreationModalOpen(true);
+                  }}
+                  onEdit={() => {
+                    setRoomEditModalOpen(true);
+                  }}
+                  onDelete={onRoomDelete}
+                  onBoardDelete={onBoardDelete}
+                />
+              )
+            )}
+          </Col>
+        </Row>
+      </Container>
 
       <RoomCreationModal
         open={roomCreationModalOpen}

@@ -1,18 +1,18 @@
 import React from "react";
-import { Login } from "./pages/Login/Login";
+import { Container, Row } from "react-bootstrap";
+import { Login } from "./pages/Login";
 import { Registration } from "./pages/Registration/Registration";
 import { Rooms } from "./pages/Rooms/Rooms";
 import { Board } from "./pages/Board/Board";
 import { userApi } from "./api/userApi";
+import { TaskerHeader } from "./components/TaskerHeader.js";
 import {
   Switch,
   Route,
-  Link,
   Redirect,
   useLocation,
   useHistory,
 } from "react-router-dom";
-import { ExitIcon } from "./icons";
 import "./App.css";
 
 export function App() {
@@ -41,45 +41,31 @@ export function App() {
   };
 
   return (
-    <>
-      <header className="header">
-        <span className="tasker-title">Tasker</span>
-
-        {!["/login", "/registration"].includes(
-          location.pathname.toLowerCase()
-        ) && (
-          <nav className="tasker-nav">
-            <Link className="nav" to={"/rooms"}>
-              Комнаты
-            </Link>
-
-            <span className="nav">{currentUser.name}</span>
-
-            <ExitIcon
-              className="nav"
-              fontSize="large"
-              onClick={deleteCookie}
-              cursor="pointer"
-            />
-          </nav>
-        )}
-      </header>
-
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/registration">
-          <Registration />
-        </Route>
-        <Route path="/rooms">
-          <Rooms currentUser={currentUser} />
-        </Route>
-        <Route path="/board/:boardId">
-          <Board />
-        </Route>
-        <Redirect exact from="/" to="rooms" />
-      </Switch>
-    </>
+    <Container>
+      <Row>
+        <TaskerHeader
+          location={location}
+          currentUser={currentUser}
+          deleteCookie={deleteCookie}
+        />
+      </Row>
+      <Row>
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/registration">
+            <Registration />
+          </Route>
+          <Route path="/rooms">
+            <Rooms currentUser={currentUser} />
+          </Route>
+          <Route path="/board/:boardId">
+            <Board />
+          </Route>
+          <Redirect exact from="/" to="rooms" />
+        </Switch>
+      </Row>
+    </Container>
   );
 }

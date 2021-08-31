@@ -1,8 +1,8 @@
 import React from "react";
 import { BurgerIcon, DotsIcon } from "../../icons";
+import { Dropdown } from "react-bootstrap";
 import "./DropdownMenu.css";
 
-// item = { label, value }
 export function DropdownMenu({ icon, items, onItemClick }) {
   const [open, setOpen] = React.useState(false);
 
@@ -27,20 +27,18 @@ export function DropdownMenu({ icon, items, onItemClick }) {
   };
 
   return (
-    <div className="burger-menu__wrapper" onClick={onWrapperClick}>
-      {renderIcon()}
-      {open && (
-        <div className="burger-menu__content">
-          {items.map((item) => (
-            <div
-              className="burger-line"
-              onClick={() => onItemClick(item.value)}
-            >
-              {item.label}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <Dropdown align="end">
+      <Dropdown.Toggle variant="primary" id="dropdown-basic">
+        {renderIcon()}
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {items.map((item) => (
+          <Dropdown.Item onClick={() => onItemClick(item.value)}>
+            {item.label}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
   );
 }

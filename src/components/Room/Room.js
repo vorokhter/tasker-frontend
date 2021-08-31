@@ -1,8 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { RoomBoard } from "../RoomBoard.js";
 import { DropdownMenu } from "..";
-import { ClearIcon } from "../../icons";
-import "./Room.css";
+import { Container, Row, Col } from "react-bootstrap";
 
 export function Room({
   room,
@@ -13,8 +12,6 @@ export function Room({
   onBoardDelete,
   canEdit,
 }) {
-  const history = useHistory();
-
   const onDropdownMenuItemClick = (value) => {
     switch (value) {
       case "edit":
@@ -42,44 +39,31 @@ export function Room({
   ];
 
   return (
-    <div className="room">
-      <div className="room__header">
-        <span className="room__header__title">{room.title}</span>
+    <Container>
+      <Row className="flex-nowrap justify-content-between">
+        <span className="fs-5 text-white">{room.title}</span>
         {canEdit && (
           <DropdownMenu
             items={dropdownMenuItems}
             onItemClick={onDropdownMenuItemClick}
           />
         )}
-      </div>
-
-      {room.boards.length > 0 ? (
-        <div className="room__boards">
-          {room.boards.map((board) => (
-            <div className="room__board" key={"board" + board.id}>
-              <div
-                className="room__board__title"
-                onClick={() => {
-                  history.push(`/board/${board.id}`);
-                }}
-              >
-                {board.title}
-              </div>
-
-              {canEdit && (
-                <div
-                  className="room__board__control"
-                  onClick={() => onBoardDelete(board)}
-                >
-                  <ClearIcon />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="fill_space">пусто</div>
-      )}
-    </div>
+      </Row>
+      <Row className="g-2">
+        {room.boards.length > 0 ? (
+          room.boards.map((board) => (
+            <Col md="4">
+              <RoomBoard
+                board={board}
+                onBoardDelete={onBoardDelete}
+                canEdit={canEdit}
+              />
+            </Col>
+          ))
+        ) : (
+          <span className="fs-3 text-white">пусто</span>
+        )}
+      </Row>
+    </Container>
   );
 }

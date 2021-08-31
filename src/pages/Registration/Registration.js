@@ -1,8 +1,17 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { userApi } from "../../api";
-import "./Registration.css";
-import men from "../../img/men.png";
+import {
+  Form,
+  Button,
+  FloatingLabel,
+  Card,
+  Container,
+  Row,
+  Col,
+  Image,
+} from "react-bootstrap";
+import banner from "../../img/banner.png";
 
 export function Registration() {
   const history = useHistory();
@@ -28,63 +37,82 @@ export function Registration() {
       return;
     }
 
-    //userState.currentUser = response.data;
     history.push("/login");
   };
 
   return (
-    <div className="page">
-      <form className="registration-form" onSubmit={submit}>
-        <h1>Регистрация</h1>
+    <Container>
+      <Row className="justify-content-between">
+        <Col md="4" className="d-flex align-items-center">
+          <Card body className="bg-light">
+            <Form onSubmit={submit}>
+              <Form.Label className="fs-5">Регистрация</Form.Label>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Имя пользователя"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="text"
+                  name="name"
+                  placeholder="Имя пользователя"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </FloatingLabel>
 
-        {isError && (
-          <span className="typography typography-error">{errorMessage}</span>
-        )}
-
-        <div className="inputs">
-          <input
-            type="text"
-            name="name"
-            placeholder="Имя пользователя"
-            className="input"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Почта"
-            className="input"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Пароль"
-            className="input"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <input
-            type="password"
-            name="passwordConfirm"
-            placeholder="Подтверждение пароля"
-            className="input"
-            value={passwordConfirm}
-            onChange={(event) => setPasswordConfirm(event.target.value)}
-          />
-        </div>
-        <div className="controls">
-          <button type="submit" className="btn btn-primary">
-            Зарегистрироваться
-          </button>
-          <Link className="btn btn-empty btn-secondary" to={`./login`}>
-            Авторизация
-          </Link>
-        </div>
-      </form>
-      <img className="men" src={men} alt="men4ik" />
-    </div>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Почта"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Почта"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Пароль"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Пароль"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Подтверждение пароля"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="password"
+                  name="passwordConfirm"
+                  placeholder="Подтверждение пароля"
+                  value={passwordConfirm}
+                  onChange={(event) => setPasswordConfirm(event.target.value)}
+                />
+              </FloatingLabel>
+              <Button variant="primary" type="submit">
+                Зарегистрироваться
+              </Button>
+              <Link to={`/login`}>
+                <Button variant="link">Авторизация</Button>
+              </Link>
+            </Form>
+          </Card>
+        </Col>
+        <Col md="6" className="d-flex align-items-center">
+          <Image src={banner} fluid alt="banner" />
+        </Col>
+      </Row>
+    </Container>
   );
 }
