@@ -1,9 +1,8 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import { Login } from "./pages/Login";
-import { Registration } from "./pages/Registration/Registration";
-import { Rooms } from "./pages/Rooms/Rooms";
-import { Board } from "./pages/Board/Board";
+import { Rooms } from "./pages/Rooms";
+import { Board } from "./pages/Board";
 import { userApi } from "./api/userApi";
 import { TaskerHeader } from "./components/TaskerHeader.js";
 import {
@@ -53,9 +52,6 @@ export function App() {
         <Switch>
           <Route path="/login">
             <Login />
-          </Route>
-          <Route path="/registration">
-            <Registration />
           </Route>
           <Route path="/rooms">
             <Rooms currentUser={currentUser} />

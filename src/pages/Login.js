@@ -1,7 +1,7 @@
 import React from "react";
-import { LoginForm } from "../components/LoginForm.js";
-import { RegistrationForm } from "../components/RegistrationForm.js";
 import { Card, Container, Row, Col, Image } from "react-bootstrap";
+import { LoginForm } from "../components/LoginForm";
+import { RegistrationForm } from "../components/RegistrationForm";
 import banner from "../img/banner.png";
 
 export function Login() {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { userApi } from "../api";
 import { Form, Button, FloatingLabel } from "react-bootstrap";
+import { userApi } from "../api";
 
 export function LoginForm({ setIsLogon }) {
   const history = useHistory();

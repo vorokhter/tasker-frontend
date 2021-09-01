@@ -1,19 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { Container, Navbar, Nav, Spinner } from "react-bootstrap";
 import { ExitIcon } from "../icons";
 
 export function TaskerHeader({ location, currentUser, deleteCookie }) {
-  //const music = new Audio("/hype.mp3");
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const audioRef = React.useRef(null);
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    } else {
+      audioRef.current.play();
+    }
+
+    setIsPlaying(!isPlaying);
+  };
 
   return (
-    <Navbar sticky="top">
-      <Container className="fw-bold">
+    <Navbar sticky="top" className="p-0">
+      <Container className="fw-bold p-0 mb-5">
         <Link
           className="fs-1 text-white text-decoration-none"
-          // onClick={() => music.play()}
+          onClick={() => togglePlay()}
         >
           Tasker
+          {isPlaying && <Spinner animation="border" variant="light" />}
+          <audio ref={audioRef}>
+            <source src="/hype.mp3" type="audio/mpeg" />
+          </audio>
         </Link>
 
         {!["/login", "/registration"].includes(

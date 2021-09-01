@@ -1,17 +1,8 @@
 import React from "react";
-import { BurgerIcon, DotsIcon } from "../../icons";
 import { Dropdown } from "react-bootstrap";
-import "./DropdownMenu.css";
+import { BurgerIcon, DotsIcon } from "../icons";
 
 export function DropdownMenu({ icon, items, onItemClick }) {
-  const [open, setOpen] = React.useState(false);
-
-  React.useState(() => {
-    window.addEventListener("click", () => {
-      setOpen(false);
-    });
-  }, []);
-
   const onWrapperClick = (event) => {
     event.stopPropagation();
   };
@@ -19,20 +10,31 @@ export function DropdownMenu({ icon, items, onItemClick }) {
   const renderIcon = () => {
     switch (icon) {
       case "dots":
-        return <DotsIcon onClick={() => setOpen(!open)} />;
+        return <DotsIcon />;
       case "burger":
       default:
-        return <BurgerIcon onClick={() => setOpen(!open)} />;
+        return <BurgerIcon />;
     }
   };
 
-  return (
-    <Dropdown align="end">
-      <Dropdown.Toggle variant="primary" id="dropdown-basic">
-        {renderIcon()}
-      </Dropdown.Toggle>
+  const CustomToggle = React.forwardRef(({ onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {renderIcon()}
+    </a>
+  ));
 
-      <Dropdown.Menu>
+  return (
+    <Dropdown align="end" className="d-flex justify-content-end">
+      <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components" />
+
+      <Dropdown.Menu renderOnMount="true">
         {items.map((item) => (
           <Dropdown.Item onClick={() => onItemClick(item.value)}>
             {item.label}

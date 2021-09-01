@@ -1,5 +1,6 @@
 import React from "react";
-import { roomApi, userApi, boardApi } from "../../api";
+import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { roomApi, userApi, boardApi } from "../api";
 import {
   UsersManageModal,
   BoardCreationModal,
@@ -7,19 +8,20 @@ import {
   RoomEditModal,
   RoomsList,
   Room,
-} from "../../components";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+} from "../components";
 
 export function Rooms({ currentUser }) {
   const [users, setUsers] = React.useState([]);
   const [rooms, setRooms] = React.useState([]);
   const [room, setRoom] = React.useState(null);
-  const [roomCreationModalOpen, setRoomCreationModalOpen] =
+
+  const [roomCreationModalShow, setRoomCreationModalShow] =
     React.useState(false);
-  const [roomEditModalOpen, setRoomEditModalOpen] = React.useState(false);
-  const [boardCreationModalOpen, setBoardCreationModalOpen] =
+  const [roomEditModalShow, setRoomEditModalShow] = React.useState(false);
+  const [boardCreationModalShow, setBoardCreationModalShow] =
     React.useState(false);
-  const [usersManageModalOpen, setUsersManageModalOpen] = React.useState(false);
+  const [usersManageModalShow, setUsersManageModalShow] = React.useState(false);
+
   const [isLoading, setIsLoading] = React.useState(false);
   const canEdit = room
     ? currentUser.id === room.creator_id || currentUser.id === "1"
@@ -86,7 +88,7 @@ export function Rooms({ currentUser }) {
 
   return (
     <>
-      <Container>
+      <Container className="p-0">
         <Row>
           <Col md="3">
             <RoomsList
@@ -94,7 +96,7 @@ export function Rooms({ currentUser }) {
               selectedRoomId={room ? room.id : "-1"}
               onRoomClick={fetchRoom}
               onCreateNew={() => {
-                setRoomCreationModalOpen(true);
+                setRoomCreationModalShow(true);
               }}
             />
           </Col>
@@ -107,13 +109,13 @@ export function Rooms({ currentUser }) {
                   canEdit={canEdit}
                   room={room}
                   onUsersManage={() => {
-                    setUsersManageModalOpen(true);
+                    setUsersManageModalShow(true);
                   }}
                   onAddBoard={() => {
-                    setBoardCreationModalOpen(true);
+                    setBoardCreationModalShow(true);
                   }}
                   onEdit={() => {
-                    setRoomEditModalOpen(true);
+                    setRoomEditModalShow(true);
                   }}
                   onDelete={onRoomDelete}
                   onBoardDelete={onBoardDelete}
@@ -125,44 +127,41 @@ export function Rooms({ currentUser }) {
       </Container>
 
       <RoomCreationModal
-        open={roomCreationModalOpen}
-        setOpen={setRoomCreationModalOpen}
-        onSuccess={async () => {
-          setRoomCreationModalOpen(false);
+        show={roomCreationModalShow}
+        onHide={async () => {
+          setRoomCreationModalShow(false);
           await fetchRooms();
         }}
       />
 
-      {room && roomEditModalOpen && (
+      {room && roomEditModalShow && (
         <RoomEditModal
-          open={roomEditModalOpen}
-          setOpen={setRoomEditModalOpen}
-          onSuccess={async () => {
-            setRoomEditModalOpen(false);
+          show={roomEditModalShow}
+          onHide={async () => {
+            setRoomEditModalShow(false);
             await Promise.all([fetchRooms(), fetchRoom(room.id)]);
           }}
           room={room}
         />
       )}
 
-      {room && boardCreationModalOpen && (
+      {room && boardCreationModalShow && (
         <BoardCreationModal
-          open={boardCreationModalOpen}
-          setOpen={setBoardCreationModalOpen}
-          room={room}
-          onSuccess={async () => {
-            setBoardCreationModalOpen(false);
+          show={boardCreationModalShow}
+          onHide={async () => {
+            setBoardCreationModalShow(false);
             await fetchRoom(room.id);
           }}
+          room={room}
         />
       )}
 
-      {room && usersManageModalOpen && (
+      {room && usersManageModalShow && (
         <UsersManageModal
           users={users}
           room={room}
-          open={usersManageModalOpen}
-          setOpen={setUsersManageModalOpen}
+          show={usersManageModalShow}
+          onHide={() => setUsersManageModalShow(false)}
           fetchUsers={fetchUsers}
         />
       )}

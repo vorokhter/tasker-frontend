@@ -1,7 +1,7 @@
 import React from "react";
-import { RoomBoard } from "../RoomBoard.js";
-import { DropdownMenu } from "..";
 import { Container, Row, Col } from "react-bootstrap";
+import { RoomBoard } from "./RoomBoard";
+import { DropdownMenu } from "./DropdownMenu";
 
 export function Room({
   room,
@@ -39,15 +39,19 @@ export function Room({
   ];
 
   return (
-    <Container>
+    <Container className="p-0">
       <Row className="flex-nowrap justify-content-between">
-        <span className="fs-5 text-white">{room.title}</span>
-        {canEdit && (
-          <DropdownMenu
-            items={dropdownMenuItems}
-            onItemClick={onDropdownMenuItemClick}
-          />
-        )}
+        <Col md="11">
+          <span className="fs-5 text-white">{room.title}</span>
+        </Col>
+        <Col md="1">
+          {canEdit && (
+            <DropdownMenu
+              items={dropdownMenuItems}
+              onItemClick={onDropdownMenuItemClick}
+            />
+          )}
+        </Col>
       </Row>
       <Row className="g-2">
         {room.boards.length > 0 ? (

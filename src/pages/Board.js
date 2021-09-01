@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { boardApi, taskApi } from "../../api";
+import { Container, Row, Col } from "react-bootstrap";
+import { boardApi, taskApi } from "../api";
 import {
   DropdownMenu,
   BoardStage,
@@ -8,20 +9,20 @@ import {
   TaskEditModal,
   BoardEditModal,
   TaskViewModal,
-} from "../../components";
-import "./Board.css";
+} from "../components";
 
 export function Board() {
   const { boardId } = useParams();
   const history = useHistory();
 
   const [board, setBoard] = React.useState(null);
-  const [taskCreationModalOpen, setTaskCreationModalOpen] =
-    React.useState(false);
   const [taskForModal, setTaskForModal] = React.useState(null);
-  const [taskEditModalOpen, setTaskEditModalOpen] = React.useState(false);
-  const [boardEditModalOpen, setBoardEditModalOpen] = React.useState(false);
-  const [taskViewModalOpen, setTaskViewModalOpen] = React.useState(false);
+
+  const [taskCreationModalShow, setTaskCreationModalShow] =
+    React.useState(false);
+  const [taskEditModalShow, setTaskEditModalShow] = React.useState(false);
+  const [boardEditModalShow, setBoardEditModalShow] = React.useState(false);
+  const [taskViewModalShow, setTaskViewModalShow] = React.useState(false);
 
   const fetchBoard = async () => {
     const response = await boardApi.getBoard(boardId);
@@ -35,12 +36,12 @@ export function Board() {
   }, []);
 
   React.useEffect(() => {
-    if (!taskViewModalOpen) setTaskForModal(null);
-  }, [taskViewModalOpen]);
+    if (!taskViewModalShow) setTaskForModal(null);
+  }, [taskViewModalShow]);
 
   const onTaskView = (task) => {
     setTaskForModal(task);
-    setTaskViewModalOpen(true);
+    setTaskViewModalShow(true);
   };
 
   const onTaskTake = async (task) => {
@@ -50,7 +51,7 @@ export function Board() {
 
   const onTaskEdit = (task) => {
     setTaskForModal(task);
-    setTaskEditModalOpen(true);
+    setTaskEditModalShow(true);
   };
 
   const onTaskDelete = async (task) => {
@@ -79,10 +80,10 @@ export function Board() {
   const onDropdownMenuItemClick = (value) => {
     switch (value) {
       case "edit":
-        setBoardEditModalOpen(true);
+        setBoardEditModalShow(true);
         break;
       case "addTask":
-        setTaskCreationModalOpen(true);
+        setTaskCreationModalShow(true);
         break;
       default:
         return;
@@ -98,18 +99,21 @@ export function Board() {
 
   return (
     <>
-      <div className="page">
-        <div className="board">
-          <div className="board__header">
-            <span className="board__title">{board.title}</span>
+      <Container className="p-0">
+        <Row className="flex-nowrap justify-content-between">
+          <Col md="11">
+            <span>{board.title}</span>
+          </Col>
+          <Col md="1">
             <DropdownMenu
               items={dropdownMenuItems}
               onItemClick={onDropdownMenuItemClick}
             />
-          </div>
-
-          <div className="board__tasks">
-            {board.stages.map((stage) => (
+          </Col>
+        </Row>
+        <Row>
+          {board.stages.map((stage) => (
+            <Col md="3">
               <BoardStage
                 stage={stage}
                 onTaskEdit={onTaskEdit}
@@ -119,38 +123,35 @@ export function Board() {
                 dragStartHandler={dragStartHandler}
                 dropHandler={dropHandler}
               />
-            ))}
-          </div>
-        </div>
-      </div>
+            </Col>
+          ))}
+        </Row>
+      </Container>
 
       <BoardEditModal
-        open={boardEditModalOpen}
-        setOpen={setBoardEditModalOpen}
+        show={boardEditModalShow}
         board={board}
-        onSuccess={async () => {
-          setBoardEditModalOpen(false);
+        onHide={async () => {
+          setBoardEditModalShow(false);
           await fetchBoard();
         }}
       />
 
       <TaskCreationModal
         boardId={board.id}
-        open={taskCreationModalOpen}
-        setOpen={setTaskCreationModalOpen}
-        onSuccess={async () => {
-          setTaskCreationModalOpen(false);
+        show={taskCreationModalShow}
+        onHide={async () => {
+          setTaskCreationModalShow(false);
           await fetchBoard();
         }}
       />
 
       {taskForModal && (
         <TaskEditModal
-          open={taskEditModalOpen}
-          setOpen={setTaskEditModalOpen}
+          show={taskEditModalShow}
           task={taskForModal}
-          onSuccess={async () => {
-            setTaskEditModalOpen(false);
+          onHide={async () => {
+            setTaskEditModalShow(false);
             setTaskForModal(null);
             await fetchBoard();
           }}
@@ -159,9 +160,9 @@ export function Board() {
 
       {taskForModal && (
         <TaskViewModal
-          open={taskViewModalOpen}
-          setOpen={setTaskViewModalOpen}
+          show={taskViewModalShow}
           task={taskForModal}
+          onHide={() => setTaskViewModalShow(false)}
         />
       )}
     </>
