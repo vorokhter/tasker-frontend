@@ -5,7 +5,7 @@
     },
     "proxies": {
       "/api/": {
-        "origin": "https://tasker-service.herokuapp.com/"
+        "origin": "https://tasker-service.herokuapp.com/api"
       }
     }
   }

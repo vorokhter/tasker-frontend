@@ -2,7 +2,7 @@
   "name": "tasker-frontend",
   "version": "1.0.0",
   "private": true,
-  "proxy": "https://tasker-service.herokuapp.com/",
+  "proxy": "https://tasker-service.herokuapp.com",
   "dependencies": {
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
