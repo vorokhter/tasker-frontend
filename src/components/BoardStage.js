@@ -25,8 +25,8 @@ export function BoardStage({
       body
       style={
         draggedOver
-          ? { background: "rgba(251, 251, 255, 0.5)" }
-          : { background: "rgba(251, 251, 255, 0.25)" }
+          ? { background: "rgba(251, 251, 255, 0.3)" }
+          : { background: "rgba(251, 251, 255, 0.15)" }
       }
       onDragOver={(event) => {
         event.preventDefault();
@@ -41,7 +41,7 @@ export function BoardStage({
         dropHandler(event, stage);
       }}
     >
-      <Card.Title>{stage.title}</Card.Title>
+      <Card.Title className="fs-5 text-white">{stage.title}</Card.Title>
 
       {stage.tasks.map((task) => {
         const onDropdownMenuItemClick = (value) => {
@@ -71,18 +71,29 @@ export function BoardStage({
             draggable={true}
             onDragStart={(event) => dragStartHandler(event, task)}
           >
-            <Card.Text>{task.title}</Card.Text>
+            <Container className="p-0">
+              <Row>
+                <Col md="10">
+                  <Card.Text className="mb-2 text-muted">
+                    {task.title}
+                  </Card.Text>
+                </Col>
+                <Col md="2">
+                  <DropdownMenu
+                    icon="dots"
+                    items={dropdownMenuItems}
+                    onItemClick={onDropdownMenuItemClick}
+                  />
+                </Col>
+              </Row>
+            </Container>
 
-            <DropdownMenu
-              icon="dots"
-              items={dropdownMenuItems}
-              onItemClick={onDropdownMenuItemClick}
-            />
-
-            <Card.Text>{task.description}</Card.Text>
+            <Card.Text className="overflow-hidden h-5">
+              {task.description}
+            </Card.Text>
 
             <Card.Subtitle className="mb-2 text-muted">
-              Назначен: {task.executor}
+              назначен: {task.executor}
             </Card.Subtitle>
           </Card>
         );

@@ -102,7 +102,7 @@ export function Board() {
       <Container className="p-0">
         <Row className="flex-nowrap justify-content-between">
           <Col md="11">
-            <span>{board.title}</span>
+            <span className="fs-4 text-white">{board.title}</span>
           </Col>
           <Col md="1">
             <DropdownMenu
