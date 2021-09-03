@@ -33,7 +33,10 @@ export function RegistrationForm({ setIsLogon }) {
 
   return (
     <Form onSubmit={submit}>
-      <Form.Label className="fs-5">Регистрация</Form.Label>
+      <Form.Label className="fs-5 d-flex">Регистрация</Form.Label>
+      {isError && (
+        <Form.Label className="text-danger">{errorMessage}</Form.Label>
+      )}
       <FloatingLabel
         controlId="floatingInput"
         label="Имя пользователя"

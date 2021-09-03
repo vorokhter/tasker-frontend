@@ -12,7 +12,6 @@ import {
   useLocation,
   useHistory,
 } from "react-router-dom";
-import "./App.css";
 
 export function App() {
   const location = useLocation();

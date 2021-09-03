@@ -26,7 +26,10 @@ export function LoginForm({ setIsLogon }) {
 
   return (
     <Form onSubmit={submit}>
-      <Form.Label className="fs-5">Авторизация</Form.Label>
+      <Form.Label className="fs-5 d-flex">Авторизация</Form.Label>
+      {isError && (
+        <Form.Label className="text-danger">{errorMessage}</Form.Label>
+      )}
       <FloatingLabel controlId="floatingInput" label="Почта" className="mb-3">
         <Form.Control
           type="email"
