@@ -36,7 +36,11 @@ export function UsersManageModal(props) {
         <Modal.Title>Управление пользователями</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Container>
+        <Container
+          style={{
+            minHeight: "250px",
+          }}
+        >
           <Row>
             <Col>
               <span>Свободные пользователи</span>

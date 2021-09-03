@@ -94,7 +94,7 @@ export function BoardStage({
                 <Card.Text
                   className="h-5 overflow-hidden"
                   style={{
-                    "max-height": "250px",
+                    maxHeight: "250px",
                   }}
                 >
                   {task.description}
