@@ -7,8 +7,6 @@ export function TaskEditModal(props) {
   const [description, setDescription] = React.useState(props.task.description);
   const [error, setError] = React.useState("");
 
-  const onTitleChange = (event) => setTitle(event.target.value);
-  const onDescriptionChange = (event) => setDescription(event.target.value);
   const onSubmit = async (event) => {
     event.preventDefault();
     const response = await taskApi.editTask({

@@ -6,7 +6,6 @@ export function RoomEditModal(props) {
   const [title, setTitle] = React.useState(props.room.title);
   const [error, setError] = React.useState("");
 
-  const onTitleChange = (event) => setTitle(event.target.value);
   const onSubmit = async (event) => {
     event.preventDefault();
     const response = await roomApi.editRoom({ id: props.room.id, title });

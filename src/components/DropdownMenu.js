@@ -3,10 +3,6 @@ import { Dropdown } from "react-bootstrap";
 import { BurgerIcon, DotsIcon } from "../icons";
 
 export function DropdownMenu({ icon, items, onItemClick }) {
-  const onWrapperClick = (event) => {
-    event.stopPropagation();
-  };
-
   const renderIcon = () => {
     switch (icon) {
       case "dots":
@@ -19,7 +15,7 @@ export function DropdownMenu({ icon, items, onItemClick }) {
 
   const CustomToggle = React.forwardRef(({ onClick }, ref) => (
     <a
-      href=""
+      href="#"
       ref={ref}
       onClick={(e) => {
         e.preventDefault();

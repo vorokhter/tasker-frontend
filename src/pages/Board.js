@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { boardApi, taskApi } from "../api";
 import {
@@ -13,7 +13,6 @@ import {
 
 export function Board() {
   const { boardId } = useParams();
-  const history = useHistory();
 
   const [board, setBoard] = React.useState(null);
   const [taskForModal, setTaskForModal] = React.useState(null);

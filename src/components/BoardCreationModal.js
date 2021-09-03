@@ -6,7 +6,6 @@ export function BoardCreationModal(props) {
   const [title, setTitle] = React.useState("");
   const [error, setError] = React.useState("");
 
-  const onTitleChange = (event) => setTitle(event.target.value);
   const onSubmit = async (event) => {
     event.preventDefault();
     const response = await roomApi.addBoard(props.room.id, {

@@ -6,9 +6,6 @@ export function TaskCreationModal(props) {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [error, setError] = React.useState("");
-
-  const onTitleChange = (event) => setTitle(event.target.value);
-  const onDescriptionChange = (event) => setDescription(event.target.value);
   const onSubmit = async (event) => {
     event.preventDefault();
     const response = await boardApi.addTask(props.boardId, {

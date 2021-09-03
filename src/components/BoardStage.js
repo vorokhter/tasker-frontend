@@ -91,7 +91,12 @@ export function BoardStage({
                   </Row>
                 </Container>
 
-                <Card.Text className="overflow-hidden h-5">
+                <Card.Text
+                  className="h-5 overflow-hidden"
+                  style={{
+                    "max-height": "250px",
+                  }}
+                >
                   {task.description}
                 </Card.Text>
 
